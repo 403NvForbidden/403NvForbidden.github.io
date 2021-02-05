@@ -90,6 +90,8 @@
                     <div class="post-heading">
                         <div class="tags">
                             
+                              <a class="tag" href="/tags/#Disentanglement Learning" title="Disentanglement Learning">Disentanglement Learning</a>
+                            
                         </div>
                         <h1>Evaluation Metrics for Disentanglement</h1>
                         <h2 class="subheading"></h2>
@@ -212,7 +214,71 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<h1><span id="2021-02-04">2021-02-04</span></h1>
+<h2><span id="evaluation-metrics">Evaluation Metrics</span></h2>
+<p><strong>Unsupervised metrics</strong>:</p>
+<ul>
+<li>
+<p><strong>Mutual Information (MI):</strong> between the input image and its embedded low dimensional representation using <strong>MINE</strong> to estimate. However, the MI metrics used previously is not normalized, we can normalize it using such formula</p>
+<img src="./mi.png" style="zoom:100%;centering">
+<p>Since Mutual information is the intersection, it is computed by \(MI(X,Y) = H(X) - H(X|Y)\), The normalized mutual information can be to obtain a scale of \([0, 1]\)</p>
+</li>
+</ul>
+<p>$$<br>
+NMI(X,Y) = \frac{2 \times I(Y;X)}{H(Y) + H(X)}<br>
+$$</p>
+<ul>
+<li>
+<p><strong>Continuity</strong></p>
+</li>
+<li>
+<p><strong>Trust worthiness</strong></p>
+</li>
+<li>
+<p><strong>LCMC</strong></p>
+</li>
+</ul>
+<p><strong>Supervised metrics</strong> (require):</p>
+<ul>
+<li>
+<p><strong>Modularity</strong></p>
+<p><strong>Assumption</strong>: ideally, each embed dimension will have high mutual information with a single factor and zero mutual information with all other factors. Modularity measures if each dimension of the latent space depends on only one attribute.</p>
+<p>Firstly measure the MI between each embed dimension and each truth factor. Then find the \(\theta_i = max(I_{ig})\), and define a template vector<br>
+$$<br>
+t_if =<br>
+\begin{cases}<br>
+\theta_{if} &amp; \text{if f=$argmax_g(I_{g})$} \<br>
+0 &amp; \text{otherwise}<br>
+\end{cases}<br>
+$$<br>
+The modularity can be computed as</p>
+<img src="./modularity.png" style="zoom:40%;centering">
+</li>
+<li>
+<p><strong>Mutual Information Gap (MIG</strong> <a href="https://arxiv.org/abs/1802.04942" target="_blank" rel="noopener">Beta-TCVAE paper</a>)</p>
+<p>Estimate the MI between a latent variable \(z_j\) and a ground truth factor \(v_k\) using the joint distribution.</p>
+<img src="./MIG.png" style="zoom:40%;centering">
+<p>Single factor can have high mutual information with multiple latent variables. We enforce axis-alignment by measuring the difference between the top two latent variables with highest mutual information.</p>
+<img src="./MIG_final.png" style="zoom:40%;centering">
+<p>Note that MIG is normalized and have scale [0, 1];</p>
+</li>
+<li>
+<p><strong>Separated Attribute Predictability</strong> <a href="https://openreview.net/pdf?id=H1kG7GZAW" target="_blank" rel="noopener">(SAP) from DIP-VAE Paper </a></p>
+<p>Firstly, construct score matrix \(S_{dk}\)  consist results from linear classification (predicting \(j^{th}\) factor using latent \(z_i\)), compute the residual score \(R^2\) measuring how well the line is fitted.</p>
+</li>
+<li>
+<p>Spearman Correlation (SCC)</p>
+<p>computes the maximum value of the SCC between an attribute and each dimension of the latent space.</p>
+</li>
+<li>
+<p><strong>Interpretability</strong>:</p>
+<p>measure the ability to predict a given of each</p>
+<p>From the k latent dimensions of \(z\), select \(z_i\space where\space i \leq k\) with maximal information about a truth factor \(v_j\)).  \(i=argmax_i(v_j, z_i|x_t)\). Evaluate the interpretability \(z_i\)) to \(v_j\)) by measuring \(p(s_j|z_i)\), by summing the  logarithms of the resulting probabilities corresponding to every test sample point for a dimension j of the side information.</p>
+<p>By aggregating the scores over all the dimensions of the side information s, we get the interpretability score</p>
+</li>
+</ul>
+
                 
 
                 <hr>
@@ -251,7 +317,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">2021-02-04</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Evaluation Metrics</span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -271,6 +337,8 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
+                          <a class="tag" href="/tags/#Disentanglement Learning" title="Disentanglement Learning">Disentanglement Learning</a>
+                        
                     </div>
                 </section>
                 
